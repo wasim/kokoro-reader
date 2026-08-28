@@ -663,7 +663,7 @@ class Player:
         with self.out_lock:
             if self._above:
                 sys.stdout.write(f"\x1b[{self._above}A")
-            sys.stdout.write("\x1b[J")
+            sys.stdout.write("\r\x1b[J")
             sys.stdout.write("".join(f"{l}\n" for l in para))
             sys.stdout.flush()
         self._above = 0
