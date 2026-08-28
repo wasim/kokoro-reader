@@ -900,7 +900,8 @@ def main():
                est_sec).run()
 
 
-if __name__ == "__main__":
+def cli():
+    """Run the command-line interface."""
     # Default SIGINT -> KeyboardInterrupt is what we rely on; keep it explicit.
     signal.signal(signal.SIGINT, signal.default_int_handler)
     try:
@@ -908,3 +909,7 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
         print("\nStopping…")
         sys.exit(130)
+
+
+if __name__ == "__main__":
+    cli()

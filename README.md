@@ -98,28 +98,26 @@ in memory — playback never writes to disk.
 
 Requires [`uv`](https://docs.astral.sh/uv/). Everything else is handled by `uv`.
 
+Run `aloud` directly from GitHub without installing it:
+
+```sh
+uvx --from git+https://github.com/wasim/aloud aloud https://example.com/article
+```
+
+Or install the `aloud` command permanently:
+
+```sh
+uv tool install git+https://github.com/wasim/aloud
+aloud https://example.com/article
+```
+
+To work from a clone instead, create the environment and command with:
+
 ```sh
 git clone https://github.com/wasim/aloud.git ~/aloud
 cd ~/aloud
-
-# Create the environment and install dependencies (reproducible).
-uv python install 3.13
-uv venv --python 3.13
 uv sync
-
-# Put the `aloud` command on your PATH.
-mkdir -p ~/.local/bin
-cat > ~/.local/bin/aloud <<'EOF'
-#!/bin/sh
-exec "$HOME/aloud/.venv/bin/python" "$HOME/aloud/aloud.py" "$@"
-EOF
-chmod +x ~/.local/bin/aloud
-```
-
-Make sure `~/.local/bin` is on your `PATH`. If not, add to `~/.zshrc`:
-
-```sh
-export PATH="$HOME/.local/bin:$PATH"
+uv run aloud https://example.com/article
 ```
 
 The whole environment is reproducible from `pyproject.toml` + `uv.lock` with a
@@ -221,7 +219,7 @@ pkill -f aloud.py                  # force-kill, if ever needed
 
 - `aloud.py` — the whole tool (one readable script)
 - `pyproject.toml` / `uv.lock` — reproducible environment
-- `~/.local/bin/aloud` — the command wrapper on your PATH
+- `~/.local/bin/aloud` — the command installed by `uv tool install`
 
 ---
 
